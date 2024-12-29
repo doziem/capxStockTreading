@@ -1,14 +1,14 @@
 package com.doziem.capxStockTreading.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+//import lombok.Data;
+//import lombok.Getter;
+//import lombok.NoArgsConstructor;
+//import lombok.Setter;
 
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
 @Table(name = "portfolios")
 public class Portfolio {
 
@@ -17,7 +17,7 @@ public class Portfolio {
     private Long id;
 
     @Column(nullable = false)
-    private String name; // Portfolio name (e.g., "Retirement Portfolio")
+    private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -26,5 +26,19 @@ public class Portfolio {
     @OneToMany(mappedBy = "portfolio", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Stock> stocks;
 
-    // Constructors, Getters, and Setters
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
