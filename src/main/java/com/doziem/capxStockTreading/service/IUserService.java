@@ -1,5 +1,6 @@
 package com.doziem.capxStockTreading.service;
 
+import com.doziem.capxStockTreading.dto.UserDto;
 import com.doziem.capxStockTreading.model.User;
 import com.doziem.capxStockTreading.request.UserUpdateRequest;
 
@@ -11,7 +12,9 @@ public interface IUserService {
 
     User updateUser(Long userId, UserUpdateRequest user);
 
-    List<User> getAllUser();
+    List<UserDto> getAllUser();
+
+    User getUser(Long userId);
 
     void deleteUser(Long userId);
 

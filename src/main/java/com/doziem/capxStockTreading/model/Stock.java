@@ -1,5 +1,6 @@
 package com.doziem.capxStockTreading.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 //import lombok.NoArgsConstructor;;
 
@@ -25,9 +26,18 @@ public class Stock {
     @Column
     private Long volume;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "portfolio_id", nullable = false)
+
     private Portfolio portfolio;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Double getBuyPrice() {
         return buyPrice;

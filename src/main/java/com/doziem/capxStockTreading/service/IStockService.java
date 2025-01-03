@@ -1,18 +1,23 @@
 package com.doziem.capxStockTreading.service;
 
+import com.doziem.capxStockTreading.dto.StockDto;
 import com.doziem.capxStockTreading.model.Stock;
 
 import java.util.List;
 
 public interface IStockService {
 
-    Stock createStock(Long portfolioId, Stock stock);
+    Stock createStock(Stock stock);
+
+//    StockDto createStock(StockRequestDto request);
 
     List<Stock> getStocksByPortfolio(Long portfolioId);
 
-    Stock updateStock(Long stockId, Stock stock);
+    Stock updateStock(Long stockId, StockDto stock);
 
-    List<Stock> getAllStock();
+    List<StockDto> getAllStock();
+
+    Stock getStockById(Long stockId);
 
     void deleteStock(Long stockId);
 
