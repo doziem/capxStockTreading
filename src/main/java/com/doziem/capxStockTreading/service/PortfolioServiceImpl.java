@@ -4,14 +4,18 @@ import com.doziem.capxStockTreading.dto.PortfolioDto;
 import com.doziem.capxStockTreading.dto.UserDto;
 import com.doziem.capxStockTreading.exception.ResourceNotFoundException;
 import com.doziem.capxStockTreading.model.Portfolio;
+import com.doziem.capxStockTreading.model.Stock;
 import com.doziem.capxStockTreading.model.User;
 import com.doziem.capxStockTreading.repository.PortfolioRepository;
 import com.doziem.capxStockTreading.repository.UserRepository;
 import com.doziem.capxStockTreading.request.PortfolioRequestDto;
+import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -24,18 +28,15 @@ public class PortfolioServiceImpl implements IPortfolioService{
     @Autowired
     public UserRepository userRepository;
 
+    public IStockService stockService;
+
+    @Autowired
+    public PortfolioServiceImpl(IStockService stockService) {
+        this.stockService = stockService;
+    }
+
     @Override
     public Portfolio createPortfolio(PortfolioDto portfolioDto, Long userId) {
-//
-//        if (portfolio.getName() == null || portfolio.getName().isEmpty()) {
-//            throw new IllegalArgumentException("Portfolio name cannot be null or empty");
-//        }
-//        User user = userRepository.findById(userId)
-//                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-//
-//        portfolio.setUser(UserDto.fromEntity(user));
-//
-//        return portfolioRepository.save(portfolio);
 
         // Validate the Portfolio name
         if (portfolioDto.getName() == null || portfolioDto.getName().isEmpty()) {
@@ -89,4 +90,51 @@ public class PortfolioServiceImpl implements IPortfolioService{
         portfolioRepository.delete(portfolio);
 
     }
+
+    public List<Stock> getPortfolio() {
+        return stockService.getRandomStocks();
+    }
+
+//    @Override
+//    public Map<String, Object> calculatePortfolioMetrics() {
+//        List<Stock> stocks = getPortfolio();
+//
+//        // Total Portfolio Value
+//        double totalValue = stocks.stream()
+//                .mapToDouble(Stock::getBuyPrice)
+//                .sum();
+//
+//        // Average Stock Price
+//        double averagePrice = totalValue / stocks.size();
+//
+//        // Highest Priced Stock
+//        Stock highestPricedStock = stocks.stream()
+//                .max(Comparator.comparingDouble(Stock::getBuyPrice))
+//                .orElse(null);
+//
+//        // Lowest Priced Stock
+//        Stock lowestPricedStock = stocks.stream()
+//                .min(Comparator.comparingDouble(Stock::getBuyPrice))
+//                .orElse(null);
+//
+//        // Price Distribution
+//        Map<String, Double> priceDistribution = stocks.stream()
+//                .collect(Collectors.toMap(
+//                        Stock::getTicker,
+//                        stock -> (stock.getBuyPrice() / totalValue) * 100
+//                ));
+//
+//        // Return all metrics in a map
+//        assert highestPricedStock != null;
+//        assert lowestPricedStock != null;
+//        return Map.of(
+//                "totalValue", totalValue,
+//                "averagePrice", averagePrice,
+//                "highestPricedStock", highestPricedStock,
+//                "lowestPricedStock", lowestPricedStock,
+//                "priceDistribution", priceDistribution
+//        );
+//    }
+
+
 }

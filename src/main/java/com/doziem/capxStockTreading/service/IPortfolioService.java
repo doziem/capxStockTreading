@@ -19,4 +19,6 @@ public interface IPortfolioService {
     Optional<Portfolio> getPortfolio(Long portfolioId);
 
     void deletePortfolio(Long portfolioId);
+
+//    Map<String, Object> calculatePortfolioMetrics();
 }

@@ -30,36 +30,36 @@ public class PortfolioValueServiceImpl implements IPortfolioValueService{
 
 
     private final List<String> availableStocks = List.of("AAPL", "GOOGL", "MSFT", "AMZN", "TSLA", "FB", "NFLX", "NVDA", "AMD", "INTC");
-//    @Override
-//    public Portfolio assignStocksToUser(Long userId) {
-//        User user = userRepository.findById(userId)
-//                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-//
-//        Portfolio portfolio = new Portfolio();
-//        portfolio.setName("User Portfolio");
-//        portfolio.setUser(user);
-//
-//        List<Stock> stocks = new ArrayList<>();
-//        Random random = new Random();
-//
-//        for (int i = 0; i < 5; i++) {
-//            String ticker = availableStocks.get(random.nextInt(availableStocks.size()));
-//
-//            Stock stock = new Stock();
-//            stock.setTicker(ticker);
-//            // Replace with real stock names if needed
-//            stock.setName("Stock " + ticker);
-//            // Assignment: Each stock has a quantity of 1
-//            stock.setQuantity(1);
-//            stock.setBuyPrice(stockPriceService.fetchStockPrice(ticker));
-//            stock.setPortfolio(portfolio);
-//
-//            stocks.add(stock);
-//        }
-//
-//        portfolio.setStocks(stocks);
-//        return portfolioRepository.save(portfolio);
-//    }
+    @Override
+    public Portfolio assignStocksToUser(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        Portfolio portfolio = new Portfolio();
+        portfolio.setName("User Portfolio");
+        portfolio.setUser(user);
+
+        List<Stock> stocks = new ArrayList<>();
+        Random random = new Random();
+
+        for (int i = 0; i < 5; i++) {
+            String ticker = availableStocks.get(random.nextInt(availableStocks.size()));
+
+            Stock stock = new Stock();
+            stock.setTicker(ticker);
+            // Replace with real stock names if needed
+            stock.setName("Stock " + ticker);
+            // Assignment: Each stock has a quantity of 1
+            stock.setQuantity(1);
+            stock.setBuyPrice(stockPriceService.fetchStockPrice(ticker));
+            stock.setPortfolio(portfolio);
+
+            stocks.add(stock);
+        }
+
+        portfolio.setStocks(stocks);
+        return portfolioRepository.save(portfolio);
+    }
 
     @Override
     public Double calculatePortfolioValue(Long portfolioId) {
@@ -71,4 +71,5 @@ public class PortfolioValueServiceImpl implements IPortfolioValueService{
                 .sum();
 
     }
+
 }

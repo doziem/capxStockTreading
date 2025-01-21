@@ -1,10 +1,15 @@
 package com.doziem.capxStockTreading.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-//import lombok.NoArgsConstructor;;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
+@Setter
+@Getter
 @Entity
+@AllArgsConstructor
 @Table(name = "capx_stocks")
 public class Stock {
     @Id
@@ -23,67 +28,22 @@ public class Stock {
     @Column(nullable = false)
     private Double buyPrice;
 
-    @Column
+    @Column(nullable = false)
     private Long volume;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "portfolio_id", nullable = false)
-
+    @ManyToOne
+    @JoinColumn(name = "portfolio_id")
+//    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     private Portfolio portfolio;
 
-    public Long getId() {
-        return id;
+//    public Stock(String ticker, String ticker1, double price) {
+//    }
+
+    public Stock() {
+
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Stock(String ticker, String s, int i, double price, Object o, Object o1) {
     }
 
-    public Double getBuyPrice() {
-        return buyPrice;
-    }
-
-    public void setBuyPrice(Double buyPrice) {
-        this.buyPrice = buyPrice;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getTicker() {
-        return ticker;
-    }
-
-    public void setTicker(String ticker) {
-        this.ticker = ticker;
-    }
-
-    public Long getVolume() {
-        return volume;
-    }
-
-    public void setVolume(Long volume) {
-        this.volume = volume;
-    }
-
-    public Portfolio getPortfolio() {
-        return portfolio;
-    }
-
-    public void setPortfolio(Portfolio portfolio) {
-        this.portfolio = portfolio;
-    }
 }

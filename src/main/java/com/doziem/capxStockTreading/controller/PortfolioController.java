@@ -1,11 +1,12 @@
 package com.doziem.capxStockTreading.controller;
 
 import com.doziem.capxStockTreading.dto.PortfolioDto;
+import com.doziem.capxStockTreading.dto.PortfolioMetrics;
 import com.doziem.capxStockTreading.exception.ResourceNotFoundException;
 import com.doziem.capxStockTreading.model.Portfolio;
 import com.doziem.capxStockTreading.response.ApiResponse;
 import com.doziem.capxStockTreading.service.IPortfolioService;
-import jakarta.validation.Valid;
+import com.doziem.capxStockTreading.service.IStockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,13 @@ public class PortfolioController {
 
     @Autowired
     private IPortfolioService portfolioService;
+
+
+    private final IStockService stockService;
+
+    public PortfolioController(IStockService stockService){
+        this.stockService = stockService;
+    }
 
     /**
      * Create a new portfolio for a user.
@@ -78,5 +86,31 @@ public class PortfolioController {
     public ResponseEntity<Void> deletePortfolio(@PathVariable Long portfolioId) {
         portfolioService.deletePortfolio(portfolioId);
         return ResponseEntity.noContent().build();
+    }
+
+//    @GetMapping("/metrics")
+//    public ResponseEntity<ApiResponse> calculatePortfolioMetrics() {
+//
+//        try {
+//            portfolioService.calculatePortfolioMetrics();
+//            return ResponseEntity.ok(new ApiResponse( portfolioService
+//                    .calculatePortfolioMetrics(),"Portfolio metric fetched"));
+//        }catch (ResourceNotFoundException e){
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+//                    .body(new ApiResponse(null, e.getMessage()));
+//        }catch (Exception e){
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body(new ApiResponse(null, e.getMessage()));
+//        }
+//    }
+
+    @GetMapping("/portfolio-value")
+    public Double getPortfolioValue() {
+        return stockService.calculatePortfolioValue();
+    }
+
+    @GetMapping("/portfolio-metrics")
+    public PortfolioMetrics getPortfolioMetrics() {
+        return stockService.calculatePortfolioMetrics();
     }
 }

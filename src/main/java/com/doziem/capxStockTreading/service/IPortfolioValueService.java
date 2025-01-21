@@ -4,7 +4,7 @@ import com.doziem.capxStockTreading.model.Portfolio;
 
 public interface IPortfolioValueService {
 
-//    Portfolio assignStocksToUser(Long userId);
+    Portfolio assignStocksToUser(Long userId);
 
     Double calculatePortfolioValue(Long portfolioId);
 }

@@ -1,5 +1,6 @@
 package com.doziem.capxStockTreading.service;
 
+import com.doziem.capxStockTreading.dto.PortfolioMetrics;
 import com.doziem.capxStockTreading.dto.StockDto;
 import com.doziem.capxStockTreading.model.Stock;
 
@@ -7,18 +8,22 @@ import java.util.List;
 
 public interface IStockService {
 
-    Stock createStock(Stock stock);
+    StockDto createStock(StockDto stock);
 
-//    StockDto createStock(StockRequestDto request);
+    StockDto createNewStock(StockDto stockDto);
 
-    List<Stock> getStocksByPortfolio(Long portfolioId);
-
-    Stock updateStock(Long stockId, StockDto stock);
+    StockDto updateExistingStock(Long id, StockDto stockDto);
 
     List<StockDto> getAllStock();
 
-    Stock getStockById(Long stockId);
+    StockDto getStockById(Long stockId);
 
     void deleteStock(Long stockId);
+
+    List<Stock> getRandomStocks();
+
+    Double calculatePortfolioValue();
+
+    PortfolioMetrics calculatePortfolioMetrics();
 
 }
